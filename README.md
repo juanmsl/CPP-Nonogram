@@ -9,9 +9,9 @@ To compile and excute the project all you need is to have installed OpenGL and c
 
 ## Compile and execute
 
-> **To compile it:** `g++ -std=c++11 *.cxx -o <Executable name> -lGL -lGLU -lglut`
+**To compile it:** `g++ -std=c++11 *.cxx -o <Executable name> -lGL -lGLU -lglut`
 
-> **To execute it:** `./<Executable name> <Nonogram file>`
+**To execute it:** `./<Executable name> <Nonogram file>`
 
 ## The nonograms files
 
