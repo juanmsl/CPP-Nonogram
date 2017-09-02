@@ -13,9 +13,9 @@ To compile and excute the project all you need is to have installed OpenGL and c
 
 **To execute it:** `./<Executable name> <Nonogram file>`
 
-## The nonograms files
+## The nonogram files
 
-The nonograms files follow the next template
+The nonogram files follow the next template
 
 ```
 <rows> <columns>
@@ -43,3 +43,4 @@ For example, the file to represent the nonogram
 2 2 2
 2 1 1
 ```
+In the [Nonograms folder](https://github.com/juanmsl/Nonogram/tree/master/Nonograms) are more examples of nonogram files
