@@ -7,11 +7,13 @@ To compile and excute the project all you need is to have installed OpenGL and c
 `sudo apt install freeglut3-dev` for OpenGL<br>
 `sudo apt install g++` for C++ compiler
 
+## Compile and execute
+
 > **To compile it:** `g++ -std=c++11 *.cxx -o <Executable name> -lGL -lGLU -lglut`
 
 > **To execute it:** `./<Executable name> <Nonogram file>`
 
-### The nonograms files
+## The nonograms files
 
 The nonograms files follow the next template
 
