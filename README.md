@@ -1,5 +1,5 @@
 # Nonogram
-Project of algorithm's analisys subject, wich consist in design and develop an algorithm that resolve nonograms
+Project of algorithm's analisys subject, wich consist in design and develop an algorithm that resolve nonograms. This is the full version of the project, all that implies an algorithm solution nonograms
 
 ## Prerequisites
 
