@@ -79,8 +79,8 @@ void dr::Drawer::setNonogram(Nonogram& nonogram) {
 void dr::Drawer::drawNonogram() const {
   float rows = nonogram->getRows();
   float columns = nonogram->getColumns();
-  float x = px + boxSize * (nonogram->getTotalRows() / 2.0f);
-  float y = py + boxSize * (nonogram->getTotalColumns() / 2.0f);
+  float x = px + boxSize * ((rows + 1.0f) / 2.0f);
+  float y = py + boxSize * ((columns + 1.0f) / 2.0f);
   glPushMatrix();
     glTranslatef(-x, y, 0.0f);
     drawNonogramRows();
@@ -92,44 +92,40 @@ void dr::Drawer::drawNonogram() const {
 void dr::Drawer::drawNonogramRows() const {
   int rows = nonogram->getRows();
   int columns = nonogram->getColumns();
-  int total_rows = nonogram->getTotalRows();
-  int total_columns = nonogram->getTotalColumns();
+  int total_rows = rows + 1.0f;
+  int total_columns = columns + 1.0f;
 
   for(int i = 0; i < rows; i++) {
-    std::deque<int> row = nonogram->get(ROW, i);
-    for(int j = 0; j < row.size(); j++) {
-      float x = -j - 1 + total_columns - columns;
-      float y = -i - 1 - total_rows + rows;
-      drawCube(x, y, 120, 100, 30);
-      HSL(0, 0, 0);
-      drawChar(x, y, (char)(row[j] + 48));
-    }
+    int row = nonogram->get(ROW, i);
+    float x = -1 + total_columns - columns;
+    float y = -i - 1 - total_rows + rows;
+    drawCube(x, y, 120, 100, 30);
+    HSL(0, 0, 0);
+    drawChar(x, y, (char)(row + 48));
   }
 }
 
 void dr::Drawer::drawNonogramColumns() const {
   int rows = nonogram->getRows();
   int columns = nonogram->getColumns();
-  int total_rows = nonogram->getTotalRows();
-  int total_columns = nonogram->getTotalColumns();
+  int total_rows = rows + 1.0f;
+  int total_columns = columns + 1.0f;
 
   for(int j = 0; j < columns; j++) {
-    std::deque<int> column = nonogram->get(COL, j);
-    for(int i = 0; i < column.size(); i++) {
-      float x = j + total_columns - columns;
-      float y = i - total_rows + rows;
-      drawCube(x, y, 120, 100, 30);
-      HSL(0, 0, 0);
-      drawChar(x, y, (char)(column[i] + 48));
-    }
+    int column = nonogram->get(COL, j);
+    float x = j + total_columns - columns;
+    float y = -total_rows + rows;
+    drawCube(x, y, 120, 100, 30);
+    HSL(0, 0, 0);
+    drawChar(x, y, (char)(column + 48));
   }
 }
 
 void dr::Drawer::drawNonogramMatrix() const {
   int rows = nonogram->getRows();
   int columns = nonogram->getColumns();
-  int total_rows = nonogram->getTotalRows();
-  int total_columns = nonogram->getTotalColumns();
+  int total_rows = rows + 1.0f;
+  int total_columns = columns + 1.0f;
 
   for(int i = 0; i < rows; i++) {
     for(int j = 0; j < columns; j++) {

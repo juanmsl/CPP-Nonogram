@@ -15,7 +15,7 @@
 
 Nonogram nonogram;
 dr::Drawer drawer(nonogram, 50);
-//Controller controller(nonogram);
+Controller controller(nonogram);
 
 void display();
 

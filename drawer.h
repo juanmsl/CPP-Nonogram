@@ -8,7 +8,7 @@
 #include <GL/freeglut.h>
 #include <GL/gl.h>
 #include <math.h>
-#include <deque>
+#include <vector>
 #include "nonogram.h"
 #include "colors.h"
 

@@ -1,5 +1,5 @@
 # Nonogram
-Project of algorithm's analisys subject, wich consist in design and develop an algorithm that resolve nonograms
+Project of algorithm's analisys subject, wich consist in design and develop an algorithm that resolve nonograms. This is a little version of the game of Nonograms, this version have a restriction, what is that each row and column have only one number.
 
 ## Prerequisites
 
@@ -20,9 +20,9 @@ The nonogram files follow the next template
 ```
 <rows> <columns>
 next <rows> lines
-  <n> <p1> <p2> ... <pn>
+  <p1> <p2> <p3> ... <prows>
 next <columns> lines
-  <n> <p1> <p2> ... <pn>
+  <p1> <p2> <p3> ... <pcolumns>
 ```
 For example, the file to represent the nonogram
 
@@ -32,15 +32,7 @@ For example, the file to represent the nonogram
 > ###### File for nonogram 5x5
 ```
 5 5
-1 5
-1 3
-1 1
-2 1
-1 5
-2 1 1
-2 2 2
-2 3 1
-2 2 2
-2 1 1
+5 3 1 1 5
+1 2 1 2 1
 ```
 In the [Nonograms folder](https://github.com/juanmsl/Nonogram/tree/master/Nonograms) are more examples of nonogram files
