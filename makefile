@@ -1,12 +1,19 @@
-COMPILER=g++
-STD_VERSION=c++11
-EXECUTABLE_NAME=mono
-OPENGL_FLAGS=-lGL -lGLU -lglut
+CC=g++
+STD=c++11
+EXE=mono
+SOURCES=${wildcard *.cxx}
+OBJECTS=$(SOURCES:.cxx=.o)
+OGL_FLAGS=-lGL -lGLU -lglut
+CC_FLAGS=-c
 
-all: nonogram
 
-nonogram: *.cxx
-	$(COMPILER) -std=$(STD_VERSION) *.cxx -o $(EXECUTABLE_NAME) $(OPENGL_FLAGS)
+all: $(SOURCES) $(EXE)
+
+$(EXE): $(OBJECTS)
+	$(CC) -std=$(STD) $(OGL_FLAGS) $(OBJECTS) -o $(EXE)
+
+%.o: %.cxx
+	$(CC) -std=$(STD) $(CC_FLAGS) $< -o $@
 
 clean:
-	rm $(EXECUTABLE_NAME)
+	rm *.o $(EXE)
