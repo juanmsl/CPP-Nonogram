@@ -10,6 +10,7 @@ To compile and excute the project all you need is to have installed OpenGL and c
 ## Compile and execute
 
 **To compile it:** `g++ -std=c++11 *.cxx -o <Executable name> -lGL -lGLU -lglut`
+  Or you only have to use the makefile that the project contains `make`
 
 **To execute it:** `./<Executable name> <Nonogram file>`
 
@@ -32,7 +33,7 @@ For example, the file to represent the nonogram
 > ###### File for nonogram 5x5
 ```
 5 5
-5 3 1 1 5
-1 2 1 2 1
+1 1 2 3 5
+1 5 3 2 1
 ```
 In the [Nonograms folder](https://github.com/juanmsl/Nonogram/tree/master/Nonograms) are more examples of nonogram files
