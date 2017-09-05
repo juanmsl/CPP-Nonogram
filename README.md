@@ -9,21 +9,31 @@ To compile and excute the project all you need is to have installed OpenGL and c
 
 ## Compile and execute
 
-**To compile it:** `g++ -std=c++11 *.cxx -o <Executable name> -lGL -lGLU -lglut`
-  Or you only have to use the makefile that the project contains `make`
+**To compile it:**
+```
+g++ -std=c++11 *.cxx -o <Executable name> -lGL -lGLU -lglut
+```
 
-**To execute it:** `./<Executable name> <Nonogram file>`
+Or you only have to use the makefile that the project contains
+
+```
+make
+```
+
+**To execute it:**
+```
+./<Executable name> <Nonogram file>
+```
 
 ## The nonogram files
 
-The nonogram files follow the next template
+The nonogram files follow the next template, the two first numbers `r` and `c` represent the rows and columns or the nonogram.
+The next `r` numbers, are the number of each row; and, as same as the rows, the next `c` numbers are the number of each column.
 
 ```
-<rows> <columns>
-next <rows> lines
-  <p1> <p2> <p3> ... <prows>
-next <columns> lines
-  <p1> <p2> <p3> ... <pcolumns>
+<r> <c>
+  <p1> <p2> <p3> ... <pr>
+  <p1> <p2> <p3> ... <pc>
 ```
 For example, the file to represent the nonogram
 
