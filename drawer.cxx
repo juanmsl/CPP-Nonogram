@@ -2,27 +2,33 @@
 
 float dr::WIDTH = 1200;
 float dr::HEIGHT = 600;
+bool dr::initIsStarted = false;
+bool dr::loopIsStarted = false;
 
-float dr::px = 0;
-float dr::py = 0;
+void dr::init(int argc, char* argv[], const int& width, const int& height) {
+  if(!initIsStarted) {
+    if(!loopIsStarted) {
+      WIDTH = width;
+      HEIGHT = height;
 
-void dr::init(int argc, char* argv[], void displayFunction()) {
-  glutInit(&argc, argv);
-  glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
-  glutInitWindowSize(WIDTH, HEIGHT);
-  glutInitWindowPosition(0, 0);
-  glutCreateWindow("Nonograma");
-  glutDisplayFunc(displayFunction);
-  glutReshapeFunc(resize);
-  glutKeyboardFunc(keyPressed);
+      glutInit(&argc, argv);
+      glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
+      glutInitWindowSize(WIDTH, HEIGHT);
+      glutInitWindowPosition(0, 0);
+      glutCreateWindow("Nonograma");
 
-  HSL(120, 60, 80, true);
-  glViewport(0, 0, WIDTH, HEIGHT);
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  gluOrtho2D(0, WIDTH, 0, HEIGHT);
+      glutReshapeFunc(resize);
 
-  glutMainLoop();
+      HSL(120, 60, 80, true);
+      glViewport(0, 0, WIDTH, HEIGHT);
+      glMatrixMode(GL_PROJECTION);
+      glLoadIdentity();
+      gluOrtho2D(0, WIDTH, 0, HEIGHT);
+    }
+    initIsStarted = true;
+  } else {
+    throw std::logic_error("The function init() must be called once");
+  }
 }
 
 void dr::resize(int w, int h) {
@@ -38,24 +44,41 @@ void dr::resize(int w, int h) {
   glutPostRedisplay();
 }
 
-void dr::keyPressed(unsigned char key, int x, int y) {
-  switch(key) {
-    case 'a': case 'A':
-      px += 10.0f;
-    break;
-    case 'd': case 'D':
-      px -= 10.0f;
-    break;
-    case 'w': case 'W':
-      py += 10.0f;
-    break;
-    case 's': case 'S':
-      py -= 10.0f;
-    break;
-    default:
-    return;
+void dr::setDisplayFunction(void displayFunction()) {
+  if(initIsStarted) {
+    if(!loopIsStarted) {
+      glutDisplayFunc(displayFunction);
+    } else {
+      throw std::logic_error("The function setDisplayFunction() must be called before the initGlutMainLoop() function");
+    }
+  } else {
+    throw std::logic_error("The function setDisplayFunction() must be called after the init() function");
   }
-  glutPostRedisplay();
+}
+
+void dr::setKeyPressedFunction(void keyPressedFunction(unsigned char key, int x, int y)) {
+  if(initIsStarted) {
+    if(!loopIsStarted) {
+      glutKeyboardFunc(keyPressedFunction);
+    } else {
+      throw std::logic_error("The function setKeyPressedFunction() must be called before the initGlutMainLoop() function");
+    }
+  } else {
+    throw std::logic_error("The function setKeyPressedFunction() must be called after the init() function");
+  }
+}
+
+void dr::initGlutMainLoop() {
+  if(initIsStarted) {
+    if(!loopIsStarted) {
+      glutMainLoop();
+      loopIsStarted = true;
+    } else {
+      throw std::logic_error("The function initGlutMainLoop() must be called once");
+    }
+  } else {
+    throw std::logic_error("The function initGlutMainLoop() must be called after the init() function");
+  }
 }
 
 dr::Drawer::Drawer() {
@@ -77,16 +100,9 @@ void dr::Drawer::setNonogram(Nonogram& nonogram) {
 }
 
 void dr::Drawer::drawNonogram() const {
-  float rows = nonogram->getRows();
-  float columns = nonogram->getColumns();
-  float x = px + boxSize * ((rows + 1.0f) / 2.0f);
-  float y = py + boxSize * ((columns + 1.0f) / 2.0f);
-  glPushMatrix();
-    glTranslatef(-x, y, 0.0f);
-    drawNonogramRows();
-    drawNonogramColumns();
-    drawNonogramMatrix();
-  glPopMatrix();
+  drawNonogramRows();
+  drawNonogramColumns();
+  drawNonogramMatrix();
 }
 
 void dr::Drawer::drawNonogramRows() const {

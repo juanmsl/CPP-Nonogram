@@ -1,5 +1,6 @@
 #include "controller.h"
 
+
 Controller::Controller() {
   this->nonogram = NULL;
 }

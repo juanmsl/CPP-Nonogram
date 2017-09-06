@@ -3,21 +3,17 @@
 #include "controller.h"
 #include "drawer.h"
 
-#define ANSI_COLOR_BLACK   "\033[1;30m"
-#define ANSI_COLOR_RED     "\033[1;31m"
-#define ANSI_COLOR_GREEN   "\033[1;32m"
-#define ANSI_COLOR_YELLOW  "\033[1;33m"
-#define ANSI_COLOR_BLUE    "\033[1;34m"
-#define ANSI_COLOR_MAGENTA "\033[1;35m"
-#define ANSI_COLOR_CYAN    "\033[1;36m"
-#define ANSI_COLOR_WHITE   "\033[1;37m"
-#define ANSI_COLOR_RESET   "\033[0m"
+#define boxSize 50
+
+float px, py;
+int rows, columns;
 
 Nonogram nonogram;
-dr::Drawer drawer(nonogram, 50);
+dr::Drawer drawer(nonogram, boxSize);
 Controller controller(nonogram);
 
 void display();
+void keyPressed(unsigned char key, int x, int y);
 
 int main(int argc, char* argv[]) {
 
@@ -28,7 +24,17 @@ int main(int argc, char* argv[]) {
 	}
 
   nonogram.setMap(argv[1]);
-	dr::init(argc, argv, display);
+
+	rows = nonogram.getRows();
+  columns = nonogram.getColumns();
+
+  int width = (columns + 3.0f) * boxSize;
+  int height = (rows + 3.0f) * boxSize;
+
+	dr::init(argc, argv, width, height);
+	dr::setDisplayFunction(display);
+	dr::setKeyPressedFunction(keyPressed);
+	dr::initGlutMainLoop();
 
 	return 0;
 }
@@ -38,16 +44,32 @@ void display() {
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 
-	drawer.drawNonogram();
-
-	HSL(0, 100, 50);
-	glPushMatrix();
-		glTranslatef(0,0,0);
-		glBegin(GL_POLYGON);
-			glVertex2f(-1, -1); glVertex2f(-1,  1);
-			glVertex2f( 1,  1); glVertex2f( 1, -1);
-		glEnd();
-	glPopMatrix();
+  float x = px + boxSize * ((rows + 1.0f) / 2.0f);
+  float y = py + boxSize * ((columns + 1.0f) / 2.0f);
+  glPushMatrix();
+    glTranslatef(-x, y, 0.0f);
+    drawer.drawNonogram();
+  glPopMatrix();
 
   glutSwapBuffers();
+}
+
+void keyPressed(unsigned char key, int x, int y) {
+  switch(key) {
+    case 'a': case 'A':
+      px += 10.0f;
+    break;
+    case 'd': case 'D':
+      px -= 10.0f;
+    break;
+    case 'w': case 'W':
+      py += 10.0f;
+    break;
+    case 's': case 'S':
+      py -= 10.0f;
+    break;
+    default:
+    return;
+  }
+  glutPostRedisplay();
 }
