@@ -1,7 +1,8 @@
 #include "drawer.h"
 
-float dr::WIDTH = 1200;
+float dr::WIDTH = 800;
 float dr::HEIGHT = 600;
+float dr::BOXSIZE = 50;
 bool dr::initIsStarted = false;
 bool dr::loopIsStarted = false;
 
@@ -81,18 +82,9 @@ void dr::initGlutMainLoop() {
   }
 }
 
-dr::Drawer::Drawer() {
-  this->boxSize = 50.0f;
-}
-
-dr::Drawer::Drawer(Nonogram& nonogram) {
-  this->nonogram = &nonogram;
-  this->boxSize = 50.0f;
-}
-
 dr::Drawer::Drawer(Nonogram& nonogram, const float& boxSize) {
   this->nonogram = &nonogram;
-  this->boxSize = boxSize;
+  BOXSIZE = boxSize;
 }
 
 void dr::Drawer::setNonogram(Nonogram& nonogram) {
@@ -153,24 +145,24 @@ void dr::Drawer::drawNonogramMatrix() const {
 }
 
 void dr::Drawer::drawCube(const float& x, const float& y, const float& H, const float& S, const float& L) const {
-  float x_i = x * boxSize;
-  float y_i = y * boxSize;
+  float x_i = x * BOXSIZE;
+  float y_i = y * BOXSIZE;
 
   HSL(H, S, L);
   glPushMatrix();
     glTranslatef(x_i, y_i, 0.0f);
     glBegin(GL_POLYGON);
       glVertex2f(1.0f, 1.0f);
-      glVertex2f(1.0f, boxSize - 1.0f);
-      glVertex2f(boxSize - 1.0f, boxSize - 1.0f);
-      glVertex2f(boxSize - 1.0f, 1.0f);
+      glVertex2f(1.0f, BOXSIZE - 1.0f);
+      glVertex2f(BOXSIZE - 1.0f, BOXSIZE - 1.0f);
+      glVertex2f(BOXSIZE - 1.0f, 1.0f);
     glEnd();
   glPopMatrix();
 }
 
 void dr::Drawer::drawChar(const float& x, const float& y, const char& c) const {
-  float x_i = x * boxSize + boxSize / 2.0f - 5.0f;
-  float y_i = y * boxSize + boxSize / 2.0f - 5.0f;
+  float x_i = x * BOXSIZE + BOXSIZE / 2.0f - 5.0f;
+  float y_i = y * BOXSIZE + BOXSIZE / 2.0f - 5.0f;
   glPushMatrix();
     glRasterPos2f(x_i, y_i);
     glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);

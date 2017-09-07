@@ -1,14 +1,15 @@
 #include "nonogram.h"
 
 Nonogram::Nonogram() {
-	this->rows = 0;
-	this->columns = 0;
-	this->rows_values.clear();
-	this->cols_values.clear();
-	matrix.clear();
+	reset();
+}
+
+Nonogram::Nonogram(const char* file_name) {
+	setMap(file_name);
 }
 
 void Nonogram::setMap(const char* file_name) {
+	reset();
 	std::ifstream input(file_name);
 	int value;
 	input >> rows >> columns;
@@ -34,6 +35,14 @@ void Nonogram::print() {
 		}
 		std::cout << "\n";
 	}
+}
+
+void Nonogram::reset() {
+	this->rows = 0;
+	this->columns = 0;
+	this->rows_values.clear();
+	this->cols_values.clear();
+	matrix.clear();
 }
 
 const int Nonogram::get(const int& type, const int& n) const {

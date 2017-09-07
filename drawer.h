@@ -27,6 +27,7 @@ namespace dr {
 
   extern float WIDTH;
   extern float HEIGHT;
+  extern float BOXSIZE;
   extern bool initIsStarted;
   extern bool loopIsStarted;
 
@@ -39,12 +40,9 @@ namespace dr {
   class Drawer {
     protected:
       Nonogram* nonogram;
-      float boxSize;
 
     public:
-      Drawer();
-      Drawer(Nonogram& nonogram);
-      Drawer(Nonogram& nonogram, const float& boxSize);
+      Drawer(Nonogram& nonogram, const float& boxSize = BOXSIZE);
       void setNonogram(Nonogram& nonogram);
       void drawNonogram() const;
       void drawNonogramRows() const;
