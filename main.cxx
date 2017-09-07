@@ -11,8 +11,9 @@ int main(int argc, char* argv[]) {
 		return -1;
 	}
 
+	dr::BOXSIZE = 50;
   Nonogram nonogram(argv[1]);
-	dr::Drawer drawer(nonogram, 50);
+	dr::Drawer drawer(nonogram);
 	cr::Controller controller(argc, argv, nonogram, drawer);
 
 	return 0;

@@ -6,12 +6,9 @@ float dr::BOXSIZE = 50;
 bool dr::initIsStarted = false;
 bool dr::loopIsStarted = false;
 
-void dr::init(int argc, char* argv[], const int& width, const int& height) {
+void dr::init(int argc, char* argv[]) {
   if(!initIsStarted) {
     if(!loopIsStarted) {
-      WIDTH = width;
-      HEIGHT = height;
-
       glutInit(&argc, argv);
       glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
       glutInitWindowSize(WIDTH, HEIGHT);
@@ -82,9 +79,8 @@ void dr::initGlutMainLoop() {
   }
 }
 
-dr::Drawer::Drawer(Nonogram& nonogram, const float& boxSize) {
+dr::Drawer::Drawer(Nonogram& nonogram) {
   this->nonogram = &nonogram;
-  BOXSIZE = boxSize;
 }
 
 void dr::Drawer::setNonogram(Nonogram& nonogram) {

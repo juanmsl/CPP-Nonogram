@@ -31,7 +31,7 @@ namespace dr {
   extern bool initIsStarted;
   extern bool loopIsStarted;
 
-  extern void init(int argc, char* argv[], const int& width = WIDTH, const int& height = HEIGHT);
+  extern void init(int argc, char* argv[]);
   extern void resize(int w, int h);
   extern void setDisplayFunction(void displayFunction());
   extern void setKeyPressedFunction(void keyPressedFunction(unsigned char key, int x, int y));
@@ -42,7 +42,7 @@ namespace dr {
       Nonogram* nonogram;
 
     public:
-      Drawer(Nonogram& nonogram, const float& boxSize = BOXSIZE);
+      Drawer(Nonogram& nonogram);
       void setNonogram(Nonogram& nonogram);
       void drawNonogram() const;
       void drawNonogramRows() const;

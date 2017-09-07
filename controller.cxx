@@ -47,10 +47,10 @@ cr::Controller::Controller(int argc, char* argv[], Nonogram& nonogram, dr::Drawe
   cr::rows = nonogram.getRows();
   cr::columns = nonogram.getColumns();
 
-  int width = (cr::columns + 3.0f) * dr::BOXSIZE;
-  int height = (cr::rows + 3.0f) * dr::BOXSIZE;
+  dr::WIDTH = (cr::columns + 3.0f) * dr::BOXSIZE;
+  dr::HEIGHT = (cr::rows + 3.0f) * dr::BOXSIZE;
 
-	dr::init(argc, argv, width, height);
+	dr::init(argc, argv);
 	dr::setDisplayFunction(cr::display);
 	dr::setKeyPressedFunction(cr::keyPressed);
 	dr::initGlutMainLoop();
