@@ -24,16 +24,20 @@ void cr::display() {
 void cr::keyPressed(unsigned char key, int x, int y) {
   switch(key) {
     case 'a': case 'A':
-      px += 10.0f;
+      if(px < dr::BOXSIZE)
+        px += 10.0f;
     break;
     case 'd': case 'D':
-      px -= 10.0f;
+      if(px > -dr::BOXSIZE)
+        px -= 10.0f;
     break;
     case 'w': case 'W':
-      py += 10.0f;
+      if(py < dr::BOXSIZE)
+        py += 10.0f;
     break;
     case 's': case 'S':
-      py -= 10.0f;
+      if(py > -dr::BOXSIZE)
+        py -= 10.0f;
     break;
     default:
     return;
