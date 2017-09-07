@@ -1,28 +1,32 @@
 #include "drawer.h"
 
-float dr::WIDTH = 1200;
+float dr::WIDTH = 800;
 float dr::HEIGHT = 600;
+float dr::BOXSIZE = 50;
+bool dr::initIsStarted = false;
+bool dr::loopIsStarted = false;
 
-float dr::px = 0;
-float dr::py = 0;
+void dr::init(int argc, char* argv[]) {
+  if(!initIsStarted) {
+    if(!loopIsStarted) {
+      glutInit(&argc, argv);
+      glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
+      glutInitWindowSize(WIDTH, HEIGHT);
+      glutInitWindowPosition(0, 0);
+      glutCreateWindow("Nonograma");
 
-void dr::init(int argc, char* argv[], void displayFunction()) {
-  glutInit(&argc, argv);
-  glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
-  glutInitWindowSize(WIDTH, HEIGHT);
-  glutInitWindowPosition(0, 0);
-  glutCreateWindow("Nonograma");
-  glutDisplayFunc(displayFunction);
-  glutReshapeFunc(resize);
-  glutKeyboardFunc(keyPressed);
+      glutReshapeFunc(resize);
 
-  HSL(120, 60, 80, true);
-  glViewport(0, 0, WIDTH, HEIGHT);
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  gluOrtho2D(0, WIDTH, 0, HEIGHT);
-
-  glutMainLoop();
+      HSL(120, 60, 80, true);
+      glViewport(0, 0, WIDTH, HEIGHT);
+      glMatrixMode(GL_PROJECTION);
+      glLoadIdentity();
+      gluOrtho2D(0, WIDTH, 0, HEIGHT);
+    }
+    initIsStarted = true;
+  } else {
+    throw std::logic_error("The function init() must be called once");
+  }
 }
 
 void dr::resize(int w, int h) {
@@ -38,38 +42,45 @@ void dr::resize(int w, int h) {
   glutPostRedisplay();
 }
 
-void dr::keyPressed(unsigned char key, int x, int y) {
-  switch(key) {
-    case 'a': case 'A':
-      px += 10.0f;
-    break;
-    case 'd': case 'D':
-      px -= 10.0f;
-    break;
-    case 'w': case 'W':
-      py += 10.0f;
-    break;
-    case 's': case 'S':
-      py -= 10.0f;
-    break;
-    default:
-    return;
+void dr::setDisplayFunction(void displayFunction()) {
+  if(initIsStarted) {
+    if(!loopIsStarted) {
+      glutDisplayFunc(displayFunction);
+    } else {
+      throw std::logic_error("The function setDisplayFunction() must be called before the initGlutMainLoop() function");
+    }
+  } else {
+    throw std::logic_error("The function setDisplayFunction() must be called after the init() function");
   }
-  glutPostRedisplay();
 }
 
-dr::Drawer::Drawer() {
-  this->boxSize = 50.0f;
+void dr::setKeyPressedFunction(void keyPressedFunction(unsigned char key, int x, int y)) {
+  if(initIsStarted) {
+    if(!loopIsStarted) {
+      glutKeyboardFunc(keyPressedFunction);
+    } else {
+      throw std::logic_error("The function setKeyPressedFunction() must be called before the initGlutMainLoop() function");
+    }
+  } else {
+    throw std::logic_error("The function setKeyPressedFunction() must be called after the init() function");
+  }
+}
+
+void dr::initGlutMainLoop() {
+  if(initIsStarted) {
+    if(!loopIsStarted) {
+      glutMainLoop();
+      loopIsStarted = true;
+    } else {
+      throw std::logic_error("The function initGlutMainLoop() must be called once");
+    }
+  } else {
+    throw std::logic_error("The function initGlutMainLoop() must be called after the init() function");
+  }
 }
 
 dr::Drawer::Drawer(Nonogram& nonogram) {
   this->nonogram = &nonogram;
-  this->boxSize = 50.0f;
-}
-
-dr::Drawer::Drawer(Nonogram& nonogram, const float& boxSize) {
-  this->nonogram = &nonogram;
-  this->boxSize = boxSize;
 }
 
 void dr::Drawer::setNonogram(Nonogram& nonogram) {
@@ -77,16 +88,9 @@ void dr::Drawer::setNonogram(Nonogram& nonogram) {
 }
 
 void dr::Drawer::drawNonogram() const {
-  float rows = nonogram->getRows();
-  float columns = nonogram->getColumns();
-  float x = px + boxSize * (nonogram->getTotalRows() / 2.0f);
-  float y = py + boxSize * (nonogram->getTotalColumns() / 2.0f);
-  glPushMatrix();
-    glTranslatef(-x, y, 0.0f);
-    drawNonogramRows();
-    drawNonogramColumns();
-    drawNonogramMatrix();
-  glPopMatrix();
+  drawNonogramRows();
+  drawNonogramColumns();
+  drawNonogramMatrix();
 }
 
 void dr::Drawer::drawNonogramRows() const {
@@ -141,24 +145,24 @@ void dr::Drawer::drawNonogramMatrix() const {
 }
 
 void dr::Drawer::drawCube(const float& x, const float& y, const float& H, const float& S, const float& L) const {
-  float x_i = x * boxSize;
-  float y_i = y * boxSize;
+  float x_i = x * BOXSIZE;
+  float y_i = y * BOXSIZE;
 
   HSL(H, S, L);
   glPushMatrix();
     glTranslatef(x_i, y_i, 0.0f);
     glBegin(GL_POLYGON);
       glVertex2f(1.0f, 1.0f);
-      glVertex2f(1.0f, boxSize - 1.0f);
-      glVertex2f(boxSize - 1.0f, boxSize - 1.0f);
-      glVertex2f(boxSize - 1.0f, 1.0f);
+      glVertex2f(1.0f, BOXSIZE - 1.0f);
+      glVertex2f(BOXSIZE - 1.0f, BOXSIZE - 1.0f);
+      glVertex2f(BOXSIZE - 1.0f, 1.0f);
     glEnd();
   glPopMatrix();
 }
 
 void dr::Drawer::drawChar(const float& x, const float& y, const char& c) const {
-  float x_i = x * boxSize + boxSize / 2.0f - 5.0f;
-  float y_i = y * boxSize + boxSize / 2.0f - 5.0f;
+  float x_i = x * BOXSIZE + BOXSIZE / 2.0f - 5.0f;
+  float y_i = y * BOXSIZE + BOXSIZE / 2.0f - 5.0f;
   glPushMatrix();
     glRasterPos2f(x_i, y_i);
     glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);

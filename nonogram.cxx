@@ -1,16 +1,15 @@
 #include "nonogram.h"
 
 Nonogram::Nonogram() {
-	this->rows = 0;
-	this->columns = 0;
-	this->tot_rows = 0;
-	this->tot_cols = 0;
-	this->rows_values.clear();
-	this->cols_values.clear();
-	matrix.clear();
+	reset();
+}
+
+Nonogram::Nonogram(const char* file_name) {
+	setMap(file_name);
 }
 
 void Nonogram::setMap(const char* file_name) {
+	reset();
 	std::ifstream input(file_name);
 	int rc, cc, value;
 	input >> rows >> columns;
@@ -57,6 +56,16 @@ void Nonogram::print() {
 	}
 }
 
+void Nonogram::reset() {
+	this->rows = 0;
+	this->columns = 0;
+	this->tot_rows = 0;
+	this->tot_cols = 0;
+	this->rows_values.clear();
+	this->cols_values.clear();
+	matrix.clear();
+}
+
 const std::deque<int> Nonogram::get(const int& type, const int& n) const {
 	if(type == ROW) {
 		return rows_values[n];
@@ -82,6 +91,13 @@ const int Nonogram::getTotalColumns() const {
 }
 
 const bool Nonogram::isOn(const int& i, const int& j) const {
-	std::map<int, int> column = matrix.find(i)->second;
-	return (column.find(j)->second == 1);
+	std::map<int, std::map<int, int>>::const_iterator column_map = matrix.find(i);
+	if(column_map != matrix.end()) {
+		std::map<int, int> column = column_map->second;
+		std::map<int, int>::const_iterator row_map = column.find(j);
+		if(row_map != column.end()) {
+			return row_map->second == 1;
+		}
+	}
+	return 0;
 }

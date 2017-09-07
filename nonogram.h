@@ -21,8 +21,10 @@ class Nonogram {
 
 	public:
 		Nonogram();
+		Nonogram(const char* file_name);
 		void setMap(const char* file_name);
 		void print();
+		void reset();
 		const std::deque<int> get(const int& type, const int& n) const;
 		const int getRows() const;
 		const int getTotalRows() const;
