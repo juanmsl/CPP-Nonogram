@@ -24,6 +24,7 @@ class Nonogram {
 		void print();
 		void reset();
 		const int get(const int& type, const int& n) const;
+		void set(const int& i, const int& j, const bool& value);
 		const int getRows() const;
 		const int getColumns() const;
 		const bool isOn(const int& i, const int& j) const;

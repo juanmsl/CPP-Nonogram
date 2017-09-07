@@ -5,6 +5,7 @@ float cr::py = 0;
 int cr::rows = 0;
 int cr::columns = 0;
 dr::Drawer* cr::drawer;
+Nonogram* cr::nonogram;
 
 void cr::display() {
   glClear(GL_COLOR_BUFFER_BIT);
@@ -46,7 +47,7 @@ void cr::keyPressed(unsigned char key, int x, int y) {
 }
 
 cr::Controller::Controller(int argc, char* argv[], Nonogram& nonogram, dr::Drawer& drawer) {
-  this->nonogram = &nonogram;
+  cr::nonogram = &nonogram;
   cr::drawer = &drawer;
   cr::rows = nonogram.getRows();
   cr::columns = nonogram.getColumns();
