@@ -74,6 +74,12 @@ const std::deque<int> Nonogram::get(const int& type, const int& n) const {
 	}
 }
 
+void Nonogram::set(const int& i, const int& j, const bool& value) {
+	if(i < rows && j < columns) {
+		this->matrix[i][j] = value;
+	}
+}
+
 const int Nonogram::getRows() const {
 	return this->rows;
 }

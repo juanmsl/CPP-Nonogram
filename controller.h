@@ -13,14 +13,12 @@ namespace cr {
   extern int rows;
   extern int columns;
   extern dr::Drawer* drawer;
+  extern Nonogram* nonogram;
 
   extern void display();
   extern void keyPressed(unsigned char key, int x, int y);
 
   class Controller {
-    protected:
-      Nonogram* nonogram;
-
     public:
       Controller();
       Controller(int argc, char* argv[], Nonogram& nonogram, dr::Drawer& drawer);

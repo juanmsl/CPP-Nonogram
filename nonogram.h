@@ -26,6 +26,7 @@ class Nonogram {
 		void print();
 		void reset();
 		const std::deque<int> get(const int& type, const int& n) const;
+		void set(const int& i, const int& j, const bool& value);
 		const int getRows() const;
 		const int getTotalRows() const;
 		const int getColumns() const;
