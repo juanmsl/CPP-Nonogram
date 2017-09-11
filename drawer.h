@@ -43,7 +43,6 @@ namespace dr {
 
     public:
       Drawer(Nonogram& nonogram);
-      void setNonogram(Nonogram& nonogram);
       void drawNonogram() const;
       void drawNonogramRows() const;
       void drawNonogramColumns() const;
@@ -51,6 +50,7 @@ namespace dr {
       void drawCube(const float& x, const float& y, const float& H, const float& S, const float& L) const;
       void drawChar(const float& x, const float& y, const char& c) const;
       void drawText(const std::string& text, const float& x, const float& y) const;
+      void drawResult(const bool& result) const;
   };
 }
 

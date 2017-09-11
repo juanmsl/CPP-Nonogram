@@ -10,8 +10,6 @@ namespace cr {
 
   extern float px;
   extern float py;
-  extern int rows;
-  extern int columns;
   extern dr::Drawer* drawer;
   extern Nonogram* nonogram;
 
@@ -22,6 +20,7 @@ namespace cr {
     public:
       Controller();
       Controller(int argc, char* argv[], Nonogram& nonogram, dr::Drawer& drawer);
+
   };
 }
 

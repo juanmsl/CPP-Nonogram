@@ -81,16 +81,16 @@ void dr::initGlutMainLoop() {
 
 dr::Drawer::Drawer(Nonogram& nonogram) {
   this->nonogram = &nonogram;
-}
 
-void dr::Drawer::setNonogram(Nonogram& nonogram) {
-  this->nonogram = &nonogram;
+  dr::WIDTH = (nonogram.getColumns() + 3.0f) * dr::BOXSIZE;
+  dr::HEIGHT = (nonogram.getRows() + 3.0f) * dr::BOXSIZE;
 }
 
 void dr::Drawer::drawNonogram() const {
   drawNonogramRows();
   drawNonogramColumns();
   drawNonogramMatrix();
+  drawResult(nonogram->isCorrect());
 }
 
 void dr::Drawer::drawNonogramRows() const {
@@ -169,5 +169,45 @@ void dr::Drawer::drawText(const std::string& text, const float& x, const float& 
   glRasterPos2f(x, y);
   for(auto c : text) {
     glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);
+  }
+}
+
+void dr::Drawer::drawResult(const bool& result) const {
+  if(result) {
+    drawCube(0, -1, 88, 68, 33);
+    HSL(0,0,0);
+    glPushMatrix();
+      glTranslatef(BOXSIZE * 0.5, BOXSIZE * -0.4, 0);
+      glRotatef(-45, 0, 0, 1);
+      glBegin(GL_QUADS);
+        HSL(0, 100, 100);
+        glVertex2f(BOXSIZE * 0.10, BOXSIZE * 0.30);
+        glVertex2f(BOXSIZE * 0.20, BOXSIZE * 0.30);
+        glVertex2f(BOXSIZE * 0.20, BOXSIZE * -0.3);
+        glVertex2f(BOXSIZE * 0.10, BOXSIZE * -0.3);
+        glVertex2f(BOXSIZE * -0.1, BOXSIZE * -0.2);
+        glVertex2f(BOXSIZE * 0.20, BOXSIZE * -0.2);
+        glVertex2f(BOXSIZE * 0.20, BOXSIZE * -0.3);
+        glVertex2f(BOXSIZE * -0.1, BOXSIZE * -0.3);
+      glEnd();
+    glPopMatrix();
+  } else {
+    drawCube(0, -1, 351, 93, 56);
+    HSL(0,0,0);
+    glPushMatrix();
+      glTranslatef(BOXSIZE * 0.5, BOXSIZE * -0.5, 0);
+      glRotatef(-45, 0, 0, 1);
+      glBegin(GL_QUADS);
+        HSL(0, 100, 100);
+        glVertex2f(BOXSIZE * -0.05, BOXSIZE *  0.30);
+        glVertex2f(BOXSIZE *  0.05, BOXSIZE *  0.30);
+        glVertex2f(BOXSIZE *  0.05, BOXSIZE * -0.3);
+        glVertex2f(BOXSIZE * -0.05, BOXSIZE * -0.3);
+        glVertex2f(BOXSIZE *  0.30, BOXSIZE * -0.05);
+        glVertex2f(BOXSIZE *  0.30, BOXSIZE *  0.05);
+        glVertex2f(BOXSIZE * -0.3, BOXSIZE *  0.05);
+        glVertex2f(BOXSIZE * -0.3, BOXSIZE * -0.05);
+      glEnd();
+    glPopMatrix();
   }
 }

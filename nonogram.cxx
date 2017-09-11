@@ -21,20 +21,11 @@ void Nonogram::setMap(const char* file_name) {
 		input >> value;
 		cols_values.push_back(value);
 	}
-	input.close();
-}
-
-void Nonogram::print() {
 	for(int i = 0; i < rows; i++) {
-		for(int j = 0; j < columns; j++) {
-			if(matrix[i][j] == 0) {
-				std::cout << "  ";
-			} else {
-				std::cout << matrix[i][j] << " ";
-			}
-		}
-		std::cout << "\n";
+		std::vector<int> row(columns, 0);
+		matrix.push_back(row);
 	}
+	input.close();
 }
 
 void Nonogram::reset() {
@@ -68,13 +59,27 @@ const int Nonogram::getColumns() const {
 }
 
 const bool Nonogram::isOn(const int& i, const int& j) const {
-	std::map<int, std::map<int, int>>::const_iterator column_map = matrix.find(i);
-	if(column_map != matrix.end()) {
-		std::map<int, int> column = column_map->second;
-		std::map<int, int>::const_iterator row_map = column.find(j);
-		if(row_map != column.end()) {
-			return row_map->second == 1;
-		}
+	if(i < rows && j < columns) {
+		return matrix[i][j] == 1;
 	}
 	return 0;
+}
+
+const bool Nonogram::isCorrect() const {
+	bool correct = true;
+	for(int i = 0; i < rows; i++) {
+		int sum = 0;
+		for(int j = 0; j < columns; j++) {
+			sum += matrix[i][j];
+		}
+		correct &= sum == rows_values[i];
+	}
+	for(int j = 0; j < columns; j++) {
+		int sum = 0;
+		for(int i = 0; i < rows; i++) {
+			sum += matrix[i][j];
+		}
+		correct &= sum == cols_values[j];
+	}
+	return correct;
 }
