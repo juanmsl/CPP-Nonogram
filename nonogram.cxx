@@ -25,6 +25,12 @@ void Nonogram::setMap(const char* file_name) {
 		std::vector<int> row(columns, 0);
 		matrix.push_back(row);
 	}
+
+	for(int i = 0; i < rows; i++) {
+		for(int j = 0; j < rows_values[i]; j++) {
+			matrix[i][j] = 1;
+		}
+	}
 	input.close();
 }
 
@@ -62,7 +68,7 @@ const bool Nonogram::isOn(const int& i, const int& j) const {
 	if(i < rows && j < columns) {
 		return matrix[i][j] == 1;
 	}
-	return 0;
+	throw std::logic_error("Access error: The position doesn't exist");
 }
 
 const bool Nonogram::isCorrect() const {
@@ -82,4 +88,24 @@ const bool Nonogram::isCorrect() const {
 		correct &= sum == cols_values[j];
 	}
 	return correct;
+}
+
+const bool Nonogram::isCorrect(const int& type, const int& n) const {
+	int sum = 0;
+	if(type == COL && n < columns) {
+		for(int i = 0; i < rows; i++) {
+			sum += matrix[i][n];
+		}
+		return sum == cols_values[n];
+	} else if(type == ROW && n < rows) {
+		for(int j = 0; j < columns; j++) {
+			sum += matrix[n][j];
+		}
+		return sum == rows_values[n];
+	}
+	throw std::logic_error("The value of type or n is invalid");
+}
+
+std::vector<int>& Nonogram::operator[] (const int& i) {
+	return matrix[i];
 }

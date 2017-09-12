@@ -47,10 +47,12 @@ namespace dr {
       void drawNonogramRows() const;
       void drawNonogramColumns() const;
       void drawNonogramMatrix() const;
-      void drawCube(const float& x, const float& y, const float& H, const float& S, const float& L) const;
+      void drawCube(const float& x, const float& y, const float& H, const float& S, const float& L, const float& scale = 1.0f) const;
       void drawChar(const float& x, const float& y, const char& c) const;
       void drawText(const std::string& text, const float& x, const float& y) const;
-      void drawResult(const bool& result) const;
+      void drawResult(const float& x, const float& y, const bool& result, const float& scale = 1.0f) const;
+      void drawCorrectSymbol(const float& x, const float& y, const float& scale = 1.0f) const;
+      void drawIncorrectSymbol(const float& x, const float& y, const float& scale = 1.0f) const;
   };
 }
 

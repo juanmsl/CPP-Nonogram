@@ -10,10 +10,8 @@ void cr::display() {
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 
-  float x = px + dr::BOXSIZE * ((nonogram->getRows() + 1.0f) / 2.0f);
-  float y = py + dr::BOXSIZE * ((nonogram->getColumns() + 1.0f) / 2.0f);
   glPushMatrix();
-    glTranslatef(-x, y, 0.0f);
+    glTranslatef(-px, py, 0.0f);
     cr::drawer->drawNonogram();
   glPopMatrix();
 

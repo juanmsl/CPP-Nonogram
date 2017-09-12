@@ -28,6 +28,8 @@ class Nonogram {
 		const int getColumns() const;
 		const bool isOn(const int& i, const int& j) const;
 		const bool isCorrect() const;
+		const bool isCorrect(const int& type, const int& n) const;
+		std::vector<int>& operator[] (const int& i);
 };
 
 #endif
