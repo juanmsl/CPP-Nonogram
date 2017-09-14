@@ -8,8 +8,9 @@
 
 namespace cr {
 
-  extern float px;
-  extern float py;
+  extern int i;
+  extern int j;
+  extern bool isPlaying;
   extern dr::Drawer* drawer;
   extern Nonogram* nonogram;
 

@@ -25,12 +25,6 @@ void Nonogram::setMap(const char* file_name) {
 		std::vector<int> row(columns, 0);
 		matrix.push_back(row);
 	}
-
-	for(int i = 0; i < rows; i++) {
-		for(int j = 0; j < rows_values[i]; j++) {
-			matrix[i][j] = 1;
-		}
-	}
 	input.close();
 }
 
