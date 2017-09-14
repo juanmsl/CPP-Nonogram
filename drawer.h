@@ -35,6 +35,7 @@ namespace dr {
 	extern void resize(int w, int h);
 	extern void setDisplayFunction(void displayFunction());
 	extern void setKeyPressedFunction(void keyPressedFunction(unsigned char key, int x, int y));
+	extern void setSpecialFunction(void specialKeys(int key, int x, int y));
 	extern void initGlutMainLoop();
 
 	class Drawer {
@@ -51,8 +52,8 @@ namespace dr {
 			void drawChar(const float& x, const float& y, const char& c) const;
 			void drawText(const std::string& text, const float& x, const float& y) const;
 			void drawResult(const float& x, const float& y, const bool& result, const float& scale = 1.0f) const;
-			void drawCorrectSymbol(const float& x, const float& y, const float& scale = 1.0f) const;
-			void drawIncorrectSymbol(const float& x, const float& y, const float& scale = 1.0f) const;
+			void drawCheck(const float& x, const float& y, const float& scale = 1.0f) const;
+			void drawCross(const float& x, const float& y, const float& scale = 1.0f) const;
 			void drawCell(const float& i, const float& j) const;
 		};
 }

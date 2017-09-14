@@ -23,28 +23,32 @@ void cr::display() {
 
 void cr::keyPressed(unsigned char key, int x, int y) {
 	switch(key) {
-	case 'a': case 'A':
-		if(isPlaying && j > 0) j--;
-	break;
-	case 'd': case 'D':
-		if(isPlaying && j < nonogram->getColumns() - 1) j++;
-	break;
-	case 'w': case 'W':
-		if(isPlaying && i > 0) i--;
-	break;
-	case 's': case 'S':
-		if(isPlaying && i < nonogram->getRows() - 1) i++;
-	break;
-	case 'r': case 'R':
-		isPlaying = !isPlaying;
-	break;
-	case ' ':
-		if(isPlaying) {
-			(*nonogram)[i][j] = !(*nonogram)[i][j];
-		}
-	break;
-	default:
-	return;
+		case 'r': case 'R':
+			isPlaying = !isPlaying;
+		break;
+		case ' ':
+			if(isPlaying) {
+				(*nonogram)[i][j] = !(*nonogram)[i][j];
+			}
+		break;
+		default:
+		return;
+	}
+	glutPostRedisplay();
+}
+
+void cr::specialKeys(int key, int x, int y) {
+	switch(key) {
+		case GLUT_KEY_LEFT: if(isPlaying && j > 0) j--;
+		break;
+		case GLUT_KEY_RIGHT: if(isPlaying && j < nonogram->getColumns() - 1) j++;
+		break;
+		case GLUT_KEY_UP: if(isPlaying && i > 0) i--;
+		break;
+		case GLUT_KEY_DOWN: if(isPlaying && i < nonogram->getRows() - 1) i++;
+		break;
+		default:
+		break;
 	}
 	glutPostRedisplay();
 }
@@ -56,5 +60,10 @@ cr::Controller::Controller(int argc, char* argv[], Nonogram& nonogram, dr::Drawe
 	dr::init(argc, argv);
 	dr::setDisplayFunction(cr::display);
 	dr::setKeyPressedFunction(cr::keyPressed);
+	dr::setSpecialFunction(cr::specialKeys);
 	dr::initGlutMainLoop();
+}
+
+void cr::Controller::void solveNonogram() {
+	
 }

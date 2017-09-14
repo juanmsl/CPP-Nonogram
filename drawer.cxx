@@ -66,6 +66,19 @@ void dr::setKeyPressedFunction(void keyPressedFunction(unsigned char key, int x,
 	}
 }
 
+
+void dr::setSpecialFunction(void specialKeys(int key, int x, int y)) {
+	if(initIsStarted) {
+		if(!loopIsStarted) {
+			glutSpecialFunc(specialKeys);
+		} else {
+			throw std::logic_error("The function setSpecialFunction() must be called before the initGlutMainLoop() function");
+		}
+	} else {
+		throw std::logic_error("The function setSpecialFunction() must be called after the init() function");
+	}
+}
+
 void dr::initGlutMainLoop() {
 	if(initIsStarted) {
 		if(!loopIsStarted) {
@@ -167,15 +180,15 @@ void dr::Drawer::drawResult(const float& x, const float& y, const bool& result, 
 	if(result) {
 		drawCube(x, y, 88, 68, 33, scale);
 		HSL(0, 100, 100);
-		drawCorrectSymbol(x, y, scale);
+		drawCheck(x, y, scale);
 	} else {
 		drawCube(x, y, 351, 93, 56, scale);
 		HSL(0, 100, 100);
-		drawIncorrectSymbol(x, y, scale);
+		drawCross(x, y, scale);
 	}
 }
 
-void dr::Drawer::drawCorrectSymbol(const float& x, const float& y, const float& scale) const {
+void dr::Drawer::drawCheck(const float& x, const float& y, const float& scale) const {
 	float tx = x * BOXSIZE;
 	float ty = y * BOXSIZE + 5.0f;
 	float sx = BOXSIZE * scale;
@@ -198,7 +211,7 @@ void dr::Drawer::drawCorrectSymbol(const float& x, const float& y, const float& 
 	glPopMatrix();
 }
 
-void dr::Drawer::drawIncorrectSymbol(const float& x, const float& y, const float& scale) const {
+void dr::Drawer::drawCross(const float& x, const float& y, const float& scale) const {
 	float tx = x * BOXSIZE;
 	float ty = y * BOXSIZE;
 	float sx = BOXSIZE * scale;
