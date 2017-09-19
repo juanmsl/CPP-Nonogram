@@ -64,6 +64,6 @@ cr::Controller::Controller(int argc, char* argv[], Nonogram& nonogram, dr::Drawe
 	dr::initGlutMainLoop();
 }
 
-void cr::Controller::void solveNonogram() {
-	
+void cr::Controller::solveNonogram() {
+
 }
